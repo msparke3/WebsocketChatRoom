@@ -85,6 +85,8 @@ $("#userSub").click( function(event) {
 function groupSelect(group) {
   CHAT_ROOM_NUM = group.alt
   document.getElementById("configModal").style.display = "none"
+  connection.send("ready")
+
 }
 
 
@@ -120,7 +122,6 @@ var messageData = {
   const name = PERSON_NAME; 
   const data = JSON.stringify(messageData)
   //`<p>${name}: ${msgText}</p>`;
-console.log(data)
   // Send composed message to the server
   connection.send(data);
   //END of pushing your message ot the server
