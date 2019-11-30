@@ -6,7 +6,7 @@ const msgerChat = get(".msger-chat");
 
 
 //From working client
-const connection = new WebSocket("ws://localhost:8080");
+const connection = new WebSocket("ws://52.60.143.78:8080");
 const button = document.querySelector("#submitter");
 
 connection.onopen = (event) => {

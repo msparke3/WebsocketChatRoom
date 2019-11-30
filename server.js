@@ -37,6 +37,6 @@ var app = express();
 app.use(express.static('client'));
 
 
-app.listen(80, function() {
-  console.log('Example app listening on port 80!');
+app.listen(6969, function() {
+  console.log('Example app listening on port 6969!');
 });
