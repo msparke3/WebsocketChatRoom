@@ -1,98 +1,134 @@
 <html>
-    <head>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="./client.css">
-        
-        
-    </head>
-    <body>
 
-       <!-- Modal Window for Username input -->
-    <div id="usernameModal" class="modal">
-      <!--Should open the modal on window load-->
-        <!-- Modal Username Window content -->
-        <div class="modalWindow">
-            <p>Please enter your chat room username!</p>
-            <input type="text" id="UserNameInput">
-            <p> Select a profile picture from the following:</p>
-            <input type="radio" name="userPic"  value="https://cnet1.cbsistatic.com/img/qyvVFsmGS_gKN54BWgUcAME-K0g=/1092x0/2019/11/19/2eddb56d-56a3-4569-874e-32cd61180d6a/babyyoda2.jpg" checked="checked"><img id="pic" src="https://cnet1.cbsistatic.com/img/qyvVFsmGS_gKN54BWgUcAME-K0g=/1092x0/2019/11/19/2eddb56d-56a3-4569-874e-32cd61180d6a/babyyoda2.jpg" width="130"><br>
-            <input type="radio" name="userPic"  value="https://static.boredpanda.com/blog/wp-content/uuuploads/cute-baby-animals/cute-baby-animals-36.jpg"><img id="pic" src="https://static.boredpanda.com/blog/wp-content/uuuploads/cute-baby-animals/cute-baby-animals-36.jpg" width="130"><br>
-            <input type="radio" name="userPic"  value="https://ichef.bbci.co.uk/news/912/cpsprodpb/1177A/production/_105564517_gettyimages-1093791866.jpg"><img id="pic" src="https://ichef.bbci.co.uk/news/912/cpsprodpb/1177A/production/_105564517_gettyimages-1093791866.jpg" width="130"><br>
-            <button id="EnterUsername">Submit User Name</button>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./client.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div id="configModal" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 my-modal">
+      <header class="w3-container w3-blue">
+        <h1>Join a chat</h1>
+      </header>
+      <div class="w3-container">
+        <form>
+          <div class="form-group" id="userGroup">
+            <label for="username">Please enter your chat room username!</label>
+            <input type="text" class="form-control col-3" placeholder="John Doe" id="UserNameInput">
+            <p><button class="w3-button w3-blue w3-round-large" id="userSub">Submit Name</button></p>
           </div>
-  
-      </div>
-      <!-- The Modal for Chatrooms -->
-    <div id="chatroomModal" class="modal">
+          
+          
+          <div class="form-group" id="profiGroup" style="display:none">
+            <label for="profilePic">Select a profile picture from the following:</label>
 
-      <!-- Modal content -->
-      <div class="modalWindow">
-          <span class="close">&times;</span>
-          <p>Select a chatroom to join!</p>
-          <!-- Trigger/Open The Modal -->
-          <input type="radio" name="Chatroom" value="1" checked="checked">Chat Room 1<br>
-          <input type="radio" name="Chatroom" value="2">Chat Room 2<br>
-          <button id="chatButton">Select Chatroom</button>
-      </div>
+            <div class="row profiContainer" id="profiContainer">
+              <div class="column">
+                <img class="profiPic"
+                  src="https://cnet1.cbsistatic.com/img/qyvVFsmGS_gKN54BWgUcAME-K0g=/1092x0/2019/11/19/2eddb56d-56a3-4569-874e-32cd61180d6a/babyyoda2.jpg"
+                  onclick="selectImage(this);">
+              </div>
+              <div class="column">
+                <img class="profiPic"
+                  src="https://static.boredpanda.com/blog/wp-content/uuuploads/cute-baby-animals/cute-baby-animals-36.jpg"
+                  onclick="selectImage(this);">
+              </div>
+              <div class="column">
+                <img class="profiPic"
+                  src="https://ichef.bbci.co.uk/news/912/cpsprodpb/1177A/production/_105564517_gettyimages-1093791866.jpg"
+                  onclick="selectImage(this);">
+              </div>
+            </div>
+          </div>
+          <div class="form-group groupSelect" id="groupSelect" style="display:none">
+            <label for="group">Select a chatroom to join:</label>
 
-  </div>
-    
+            <div class="row profiContainer">
+              <div class="column">
+                <img class="profiPic"
+                  src="https://cdn2.f-cdn.com/contestentries/1126585/25809218/59b0a6b79690f_thumb900.jpg"
+                  alt="1"
+                  onclick="groupSelect(this);">
+              </div>
+              <div class="column">
+                <img class="profiPic"
+                  alt="2"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Logo_Paris_tram_ligne2.svg/1024px-Logo_Paris_tram_ligne2.svg.png"
+                  onclick="groupSelect(this);">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-            <section class="msger">
-                    <header class="msger-header">
-                        
-                      <div class="msger-header-title">
-                        <i class="fas fa-comment-alt"></i> SE Project Chat Room
-                      </div>
-                      <div class="msger-header-options">
-                        <span><i class="fas fa-cog"></i></span>
-                      </div>
-                    </header>
-                  
-                    <main class="msger-chat">
-                      <div class="msg left-msg">
-                        <div
-                         class="msg-img"
-                         style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-                        ></div>
-                  
-                        <div class="msg-bubble">
-                          <div class="msg-info">
-                            <div class="msg-info-name">BOT</div> <!--DELETE ME-->
-                            <div class="msg-info-time">12:45</div> <!--DELETE ME-->
-                          </div>
-                  
-                          <div class="msg-text">
-                            Hi, welcome to SimpleChat! Go ahead and send me a message. 😄<!--DELETE ME-->
-                          </div>
-                        </div>
-                      </div>
-                  
-                      <div class="msg right-msg">
-                        <div
-                         class="msg-img"
-                         style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-                        ></div>
-                  
-                        <div class="msg-bubble">
-                          <div class="msg-info">
-                            <div class="msg-info-name">Sajad</div><!--DELETE ME-->
-                            <div class="msg-info-time">12:46</div><!--DELETE ME-->
-                          </div>
-                            
-                          <div class="msg-text">
-                            You can change your name in JS section!
-                          </div> <!--THIS IS THE AUTOMATIC STUFF ENDING-->
-                        </div>
-                      </div>
-                    </main>
-                  
-                    <form class="msger-inputarea">
-                      <input type="text" class="msger-input" placeholder="Enter your message...">
-                      <button type="submit" id="submitter" class="msger-send-btn">Send</button>
-                    </form>
-                  </section>
-                  <script src="test.js"></script>
-    </body>
+  </div>
+
+
+  <section class="msger">
+    <header class="msger-header">
+
+      <div class="msger-header-title">
+        <i class="fas fa-comment-alt"></i> SE Project Chat Room
+      </div>
+      <div class="msger-header-options">
+        <span><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+
+    <main class="msger-chat">
+      <div class="msg left-msg">
+        <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>
+
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">BOT</div>
+            <!--DELETE ME-->
+            <div class="msg-info-time">12:45</div>
+            <!--DELETE ME-->
+          </div>
+
+          <div class="msg-text">
+            Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+            <!--DELETE ME-->
+          </div>
+        </div>
+      </div>
+
+      <div class="msg right-msg">
+        <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"></div>
+
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">Sajad</div>
+            <!--DELETE ME-->
+            <div class="msg-info-time">12:46</div>
+            <!--DELETE ME-->
+          </div>
+
+          <div class="msg-text">
+            You can change your name in JS section!
+          </div>
+          <!--THIS IS THE AUTOMATIC STUFF ENDING-->
+        </div>
+      </div>
+    </main>
+
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" placeholder="Enter your message...">
+      <button type="submit" id="submitter" class="msger-send-btn">Send</button>
+    </form>
+  </section>
+  <script src="client.js"></script>
+</body>
 
 </html>

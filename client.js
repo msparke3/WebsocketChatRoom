@@ -48,44 +48,53 @@ connection.onmessage = (event) => {
 
 // Icons made by Freepik from www.flaticon.com
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg"; //DELETE ME
-var PERSON_IMG;
+var PERSON_IMG = "";
 const BOT_NAME = "BOT"; //DELETE ME
-var PERSON_NAME;
-var CHAT_ROOM_NUM;
+var PERSON_NAME = "";
+var CHAT_ROOM_NUM = 0;
 
 //MODAL SECTION START
 // Get the modal
-var modalUsername = document.getElementById("usernameModal");
+var modalUsername = document.getElementById("configModal");
 
 // Get the button that opens the modal
 var buttonUsername = document.getElementById("EnterUsername");
 var modalChat = document.getElementById("chatroomModal");
 var buttonChat = document.getElementById("chatButton");
-var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 window.onload = function() {
     modalUsername.style.display = "block";
-    modalChat.style.display="none";
 }
-
+$("#userSub").click( function(event) {
+  event.preventDefault();
+  PERSON_NAME= document.getElementById("UserNameInput").value;
+    if (PERSON_NAME === ""){
+      PERSON_NAME = "John Doe"
+    }
+    document.getElementById("userGroup").style.display = "none"
+    document.getElementById("profiGroup").style.display = "block"
+});
 // When the user clicks on the button, close the modal and get the user name from the textbox
-buttonUsername.onclick = function() {
-    PERSON_NAME= document.getElementById("UserNameInput").value;
-    PERSON_IMG =document.querySelector('input[name="userPic"]:checked').value;
-    modalUsername.style.display = "none";
-    modalChat.style.display = "block";
-}
+
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modalChat.style.display = "none";
-}
-buttonChat.onclick = function() {
-  CHAT_ROOM_NUM= document.querySelector('input[name="Chatroom"]:checked').value;
-  modalChat.style.display = "none";
-}
+
+
 //MODAL SECTION END
 
+function groupSelect(group) {
+  CHAT_ROOM_NUM = group.alt
+  document.getElementById("configModal").style.display = "none"
+}
+
+
+
+function selectImage(imgs) {
+  // Use the same src in the expanded image as the image being clicked on from the grid
+  PERSON_IMG = imgs.src;
+  document.getElementById("profiContainer").style.display = "none";
+  document.getElementById("groupSelect").style.display = "block";
+}
 
 
 msgerForm.addEventListener("submit", event => {

@@ -1,0 +1,23 @@
+{
+  "name": "source",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msparke3/WebsocketChatRoom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msparke3/WebsocketChatRoom/issues"
+  },
+  "homepage": "https://github.com/msparke3/WebsocketChatRoom#readme",
+  "dependencies": {
+    "ws": "^7.2.0"
+  }
+}
