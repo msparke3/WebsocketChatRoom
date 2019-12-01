@@ -6,7 +6,7 @@ const msgerChat = get(".msger-chat");
 
 
 //From working client
-const connection = new WebSocket("ws://52.60.143.78:8080");
+const connection = new WebSocket("ws://localhost:8080");
 const button = document.querySelector("#submitter");
 
 connection.onopen = (event) => {
@@ -105,7 +105,7 @@ msgerForm.addEventListener("submit", event => {
     let msgText = msgerInput.value;
     if (!msgText) return;
   
-    appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+    appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText, CHAT_ROOM_NUM);
     msgerInput.value = "";
   //end putting your message in your own chat                        
 
@@ -128,10 +128,10 @@ var messageData = {
   });
 
 
-function appendMessage(name, img, side, text) {
+function appendMessage(name, img, side, text, groupNum) {
   //   Simple solution for small apps
   const msgHTML = `
-    <div class="msg ${side}-msg">
+    <div class="msg ${side}-msg group${groupNum}">
       <div class="msg-img" style="background-image: url(${img})"></div>
 
       <div class="msg-bubble">
@@ -145,31 +145,35 @@ function appendMessage(name, img, side, text) {
     </div>
   `;
   msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+
   msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
-  const delay = msgText.split(" ").length * 100;
 
-  setTimeout(() => {
-    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-  }, delay);
-}
 
 function servResponse(event) {
   var obj = JSON.parse(event.data)
   //const msgText = event.data;
   const msgText = obj.text;
+  const chatGroup = obj.chatRoomId;
   console.log(msgText)
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
-    if((obj.name != PERSON_NAME) && (obj.chatRoomId == CHAT_ROOM_NUM))
+    if((obj.name != PERSON_NAME))
     {
-    appendMessage(obj.name, obj.chatIM, "left", msgText);
-    console.log(PERSON_NAME)
+    
+    appendMessage(obj.name, obj.chatIM, "left", msgText, chatGroup);
+    console.log(chatGroup)
+    console.log(CHAT_ROOM_NUM)
+    //if(CHAT_ROOM_NUM != chatGroup){
+      if(CHAT_ROOM_NUM == 1){
+        $(".group2").hide() //Hide all group 2 messages so gorup 1 cannot see them
+      }
+      else{
+        $(".group1").hide()//Hide all group 1 messages so gorup 1 cannot see them
+      }
+   // }
     }
   }, delay);
 }
@@ -187,5 +191,18 @@ function formatDate(date) {
 }
 
 function random(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min) + min); //DELETE ME?
+}
+
+
+
+function showChat1(event) {
+  CHAT_ROOM_NUM=1;
+  $(".group2").hide()
+  $(".group1").show()
+}
+function showChat2(event) {
+  CHAT_ROOM_NUM=2;
+  $(".group1").hide()
+  $(".group2").show()
 }
