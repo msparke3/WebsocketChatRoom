@@ -6,7 +6,7 @@ const msgerChat = get(".msger-chat");
 
 
 //From working client
-const connection = new WebSocket("ws://localhost:8080");
+const connection = new WebSocket("ws://52.60.143.78:8080");
 const button = document.querySelector("#submitter");
 
 connection.onopen = (event) => {
@@ -29,22 +29,6 @@ connection.onmessage = (event) => {
   servResponse(event); // recieve a response
 };
 
-/*button.addEventListener("click", () => {
-  //const name = document.querySelector("#name");
-  const name = PERSON_NAME;
-  //const message = document.querySelector("#message");
-  const message = msgerInput.value
-  const data = `<p>${name.value}: ${message.value}</p>`;
-
-  // Send composed message to the server
-  connection.send(data);
-
-  // clear input fields
-  name.value = "";
-  message.value = "";
-}); */
-
-//end of coppied code
 
 // Icons made by Freepik from www.flaticon.com
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg"; //DELETE ME
@@ -52,6 +36,7 @@ var PERSON_IMG = "";
 const BOT_NAME = "BOT"; //DELETE ME
 var PERSON_NAME = "";
 var CHAT_ROOM_NUM = 0;
+var UniqueID;
 
 //MODAL SECTION START
 // Get the modal
@@ -72,6 +57,7 @@ $("#userSub").click( function(event) {
     if (PERSON_NAME === ""){
       PERSON_NAME = "John Doe"
     }
+    UniqueID = bigRand();
     document.getElementById("userGroup").style.display = "none"
     document.getElementById("profiGroup").style.display = "block"
 });
@@ -115,7 +101,8 @@ var messageData = {
   "name": PERSON_NAME,
   "text": msgText,
   "chatRoomId":  CHAT_ROOM_NUM,
-  "chatIM": PERSON_IMG
+  "chatIM": PERSON_IMG,
+  "UID":UniqueID
 }
 
 
@@ -153,27 +140,22 @@ function appendMessage(name, img, side, text, groupNum) {
 
 function servResponse(event) {
   var obj = JSON.parse(event.data)
-  //const msgText = event.data;
   const msgText = obj.text;
   const chatGroup = obj.chatRoomId;
   console.log(msgText)
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
-    if((obj.name != PERSON_NAME))
+    if((obj.UID != UniqueID))
     {
     
     appendMessage(obj.name, obj.chatIM, "left", msgText, chatGroup);
-    console.log(chatGroup)
-    console.log(CHAT_ROOM_NUM)
-    //if(CHAT_ROOM_NUM != chatGroup){
       if(CHAT_ROOM_NUM == 1){
         $(".group2").hide() //Hide all group 2 messages so gorup 1 cannot see them
       }
       else{
         $(".group1").hide()//Hide all group 1 messages so gorup 1 cannot see them
       }
-   // }
     }
   }, delay);
 }
@@ -194,7 +176,12 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min); //DELETE ME?
 }
 
-
+function bigRand() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 function showChat1(event) {
   CHAT_ROOM_NUM=1;
