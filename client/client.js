@@ -198,11 +198,22 @@ function random(min, max) {
 
 function showChat1(event) {
   CHAT_ROOM_NUM=1;
+  console.log(CHAT_ROOM_NUM)
   $(".group2").hide()
   $(".group1").show()
+  $("#Chatroom2").removeClass('w3-button w3-blue w3-round-large')
+  $("#Chatroom2").addClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom1").removeClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom1").addClass('w3-button w3-blue w3-round-large')
 }
 function showChat2(event) {
   CHAT_ROOM_NUM=2;
+  console.log(CHAT_ROOM_NUM)
   $(".group1").hide()
   $(".group2").show()
+  
+  $("#Chatroom1").removeClass('w3-button w3-blue w3-round-large')
+  $("#Chatroom1").addClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom2").removeClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom2").addClass('w3-button w3-blue w3-round-large')
 }
