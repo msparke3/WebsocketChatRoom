@@ -6,7 +6,7 @@ const msgerChat = get(".msger-chat");
 
 
 //From working client
-const connection = new WebSocket("ws://52.60.143.78:8080");
+const connection = new WebSocket("ws://localhost:8080");
 const button = document.querySelector("#submitter");
 
 connection.onopen = (event) => {
@@ -29,20 +29,32 @@ connection.onmessage = (event) => {
   servResponse(event); // recieve a response
 };
 
+/*button.addEventListener("click", () => {
+  //const name = document.querySelector("#name");
+  const name = PERSON_NAME;
+  //const message = document.querySelector("#message");
+  const message = msgerInput.value
+  const data = `<p>${name.value}: ${message.value}</p>`;
 
-// Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg"; //DELETE ME
+  // Send composed message to the server
+  connection.send(data);
+
+  // clear input fields
+  name.value = "";
+  message.value = "";
+}); */
+
+//end of coppied code
+
 var PERSON_IMG = "";
-const BOT_NAME = "BOT"; //DELETE ME
 var PERSON_NAME = "";
 var CHAT_ROOM_NUM = 0;
-var UniqueID;
 
 //MODAL SECTION START
 // Get the modal
 var modalUsername = document.getElementById("configModal");
 
-// Get the button that opens the modal
+// The modal information
 var buttonUsername = document.getElementById("EnterUsername");
 var modalChat = document.getElementById("chatroomModal");
 var buttonChat = document.getElementById("chatButton");
@@ -57,13 +69,11 @@ $("#userSub").click( function(event) {
     if (PERSON_NAME === ""){
       PERSON_NAME = "John Doe"
     }
-    UniqueID = bigRand();
     document.getElementById("userGroup").style.display = "none"
     document.getElementById("profiGroup").style.display = "block"
 });
 // When the user clicks on the button, close the modal and get the user name from the textbox
 
-// When the user clicks on <span> (x), close the modal
 
 
 //MODAL SECTION END
@@ -72,6 +82,14 @@ function groupSelect(group) {
   CHAT_ROOM_NUM = group.alt
   document.getElementById("configModal").style.display = "none"
   connection.send("ready")
+  if (CHAT_ROOM_NUM==1){
+    $("#Chatroom1").removeClass('w3-button w3-grey w3-round-large')
+    $("#Chatroom1").addClass('w3-button w3-blue w3-round-large')
+  }
+  else{
+  $("#Chatroom2").removeClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom2").addClass('w3-button w3-blue w3-round-large')
+  }
 
 }
 
@@ -101,8 +119,7 @@ var messageData = {
   "name": PERSON_NAME,
   "text": msgText,
   "chatRoomId":  CHAT_ROOM_NUM,
-  "chatIM": PERSON_IMG,
-  "UID":UniqueID
+  "chatIM": PERSON_IMG
 }
 
 
@@ -140,22 +157,27 @@ function appendMessage(name, img, side, text, groupNum) {
 
 function servResponse(event) {
   var obj = JSON.parse(event.data)
+  //const msgText = event.data;
   const msgText = obj.text;
   const chatGroup = obj.chatRoomId;
   console.log(msgText)
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
-    if((obj.UID != UniqueID))
+    if((obj.name != PERSON_NAME))
     {
     
     appendMessage(obj.name, obj.chatIM, "left", msgText, chatGroup);
+    console.log(chatGroup)
+    console.log(CHAT_ROOM_NUM)
+    //if(CHAT_ROOM_NUM != chatGroup){
       if(CHAT_ROOM_NUM == 1){
         $(".group2").hide() //Hide all group 2 messages so gorup 1 cannot see them
       }
       else{
         $(".group1").hide()//Hide all group 1 messages so gorup 1 cannot see them
       }
+   // }
     }
   }, delay);
 }
@@ -176,20 +198,26 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min); //DELETE ME?
 }
 
-function bigRand() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
+
 
 function showChat1(event) {
   CHAT_ROOM_NUM=1;
+  console.log(CHAT_ROOM_NUM)
   $(".group2").hide()
   $(".group1").show()
+  $("#Chatroom2").removeClass('w3-button w3-blue w3-round-large')
+  $("#Chatroom2").addClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom1").removeClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom1").addClass('w3-button w3-blue w3-round-large')
 }
 function showChat2(event) {
   CHAT_ROOM_NUM=2;
+  console.log(CHAT_ROOM_NUM)
   $(".group1").hide()
   $(".group2").show()
+  
+  $("#Chatroom1").removeClass('w3-button w3-blue w3-round-large')
+  $("#Chatroom1").addClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom2").removeClass('w3-button w3-grey w3-round-large')
+  $("#Chatroom2").addClass('w3-button w3-blue w3-round-large')
 }
