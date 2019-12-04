@@ -38,5 +38,5 @@ app.use(express.static('client'));
 
 
 app.listen(6969, function() {
-  console.log('Example app listening on port 6969!');
+  console.log('Client Files are hosted on port 6969!');
 });

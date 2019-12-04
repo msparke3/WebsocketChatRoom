@@ -25,26 +25,8 @@ connection.onmessage = (event) => {
   // append received message from the server to the DOM element 
   //const chat = document.querySelector("#chat");
   //chat.innerHTML += event.data;
-  console.log(event)
   servResponse(event); // recieve a response
 };
-
-/*button.addEventListener("click", () => {
-  //const name = document.querySelector("#name");
-  const name = PERSON_NAME;
-  //const message = document.querySelector("#message");
-  const message = msgerInput.value
-  const data = `<p>${name.value}: ${message.value}</p>`;
-
-  // Send composed message to the server
-  connection.send(data);
-
-  // clear input fields
-  name.value = "";
-  message.value = "";
-}); */
-
-//end of coppied code
 
 var PERSON_IMG = "";
 var PERSON_NAME = "";
@@ -160,7 +142,6 @@ function servResponse(event) {
   //const msgText = event.data;
   const msgText = obj.text;
   const chatGroup = obj.chatRoomId;
-  console.log(msgText)
   const delay = msgText.split(" ").length * 100;
 
   setTimeout(() => {
@@ -168,8 +149,6 @@ function servResponse(event) {
     {
     
     appendMessage(obj.name, obj.chatIM, "left", msgText, chatGroup);
-    console.log(chatGroup)
-    console.log(CHAT_ROOM_NUM)
     //if(CHAT_ROOM_NUM != chatGroup){
       if(CHAT_ROOM_NUM == 1){
         $(".group2").hide() //Hide all group 2 messages so gorup 1 cannot see them
